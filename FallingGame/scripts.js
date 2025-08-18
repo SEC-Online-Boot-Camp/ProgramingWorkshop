@@ -166,11 +166,12 @@ document.addEventListener('click', onClickOrTap, { passive: true });
 document.addEventListener('touchstart', onClickOrTap, { passive: true });
 
 // 同じ数字同士が衝突したら合体する
-const MERGE_COOLDOWN_MS = 500; // 連続合体を防ぐためのクールダウン
+const MERGE_COOLDOWN_MS = 10; // 連続合体を防ぐためのクールダウン
 const lastMergedAt = new Map();
 
 function canMerge(body, now) {
   const t = lastMergedAt.get(body.id) ?? 0;
+  console.log(`canMerge(${body.num}) at ${now} (last: ${t}) => ${now - t} >= ${MERGE_COOLDOWN_MS}`);
   return (now - t) >= MERGE_COOLDOWN_MS;
 }
 function markMerged(...bodies) {
@@ -184,16 +185,19 @@ function safeNewNum(n) {
 
 // 衝突イベント（合体判定）
 Events.on(engine, 'collisionStart', (evt) => {
+  console.log('collisionStart');
   if (isGameOver) return;
   const now = performance.now();
   const toMerge = [];
   for (const p of evt.pairs) {
     const a = p.bodyA, b = p.bodyB;
-    if (a.label === 'Circle Body' && b.label === 'Circle Body' && a.num && b.num && a.num === b.num) {
-      if (canMerge(a, now) && canMerge(b, now)) {
-        toMerge.push([a, b]);
-      }
-    }
+    console.log(a.label, b.label);
+    if (a.label !== 'Circle Body' || b.label !== 'Circle Body') continue;
+    console.log(a.num, b.num);
+    if (!a.num || !b.num || a.num !== b.num) continue;
+    if (!canMerge(a, now) || !canMerge(b, now)) continue;
+    console.log(`Merging ${a.num} at ${a.position.x},${a.position.y} with ${b.num} at ${b.position.x},${b.position.y}`);
+    toMerge.push([a, b]);
   }
   const removed = new Set();
   for (const [a, b] of toMerge) {
