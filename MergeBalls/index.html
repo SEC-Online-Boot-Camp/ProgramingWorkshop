@@ -1,3 +1,15 @@
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js"></script>
+    </head>
+    <body>
+        <div>score: <span id="score">0</span></div>
+        <div id="game"></div>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    </body>
+</html>
+
+<script>
 const { Engine, Render, Runner, World, Bodies, Body, Events, Composite } = Matter;
 
 // ゲーム画面サイズ
@@ -257,3 +269,5 @@ Events.on(render, 'afterRender', () => {
 
 // 初期プレビュー表示
 ensurePreview(WIDTH / 2);
+
+</script>
