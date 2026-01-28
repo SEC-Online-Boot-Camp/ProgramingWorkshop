@@ -1,0 +1,38 @@
+/* TaskManager page styles */
+.page-title{ text-align:center; font-size:2.25rem; font-weight:600; margin-bottom:1rem }
+
+/* Table alignment */
+table.table thead th { text-align: center; }
+table.table tbody td { text-align: center; vertical-align: middle; }
+table.table tbody td:nth-child(1) { text-align: left; }
+
+/* Create button / wrapper */
+.table-wrapper{position:relative; padding-top:3rem}
+.table-wrapper > a{position:absolute; top:0.25rem; right:0}
+
+/* Muted grayish button style for create/edit/delete */
+.table-wrapper > a.btn-primary{
+  background-color:#e1e7ea !important;
+  border-color:#c9d3d6 !important;
+  color:#0b3a50 !important;
+  text-decoration: none !important;
+}
+
+.table-wrapper .btn-outline-secondary,
+.table-wrapper .btn-outline-danger{
+  background-color:#e1e7ea !important;
+  border-color:#c9d3d6 !important;
+  color:#0b3a50 !important;
+  text-decoration: none !important;
+}
+
+.table-wrapper > a.btn-primary:hover,
+.table-wrapper .btn-outline-secondary:hover,
+.table-wrapper .btn-outline-danger:hover,
+.table-wrapper > a.btn-primary:focus,
+.table-wrapper .btn-outline-secondary:focus,
+.table-wrapper .btn-outline-danger:focus{
+  background-color:#c9d3d6 !important;
+  border-color:#b1bcc0 !important;
+  color:#0b3a50 !important;
+}

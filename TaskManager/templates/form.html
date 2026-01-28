@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>タスク追加</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+  </head>
+  <body class="p-3">
+    <div class="container">
+      <h1>タスク追加</h1>
+      <form method="post" action="{{ form_action or '/tasks/create' }}">
+        <div style="margin-bottom:.5rem;"><label>タスク<br><input name="task" id="f_task" class="form-control" value="{{ task_item.task if task_item else '' }}"/></label></div>
+        <div style="margin-bottom:.5rem;"><label>担当者<br><input name="assigned" id="f_assigned" class="form-control" value="{{ task_item.assigned if task_item else '' }}"/></label></div>
+        <div style="margin-bottom:.5rem;"><label>状況<br>
+          <select name="status" id="f_status" class="form-select">
+            <option value="未着手" {% if task_item and task_item.status=='未着手' %}selected{% endif %}>未着手</option>
+            <option value="進行中" {% if task_item and task_item.status=='進行中' %}selected{% endif %}>進行中</option>
+            <option value="完了" {% if task_item and task_item.status=='完了' %}selected{% endif %}>完了</option>
+          </select>
+        </label></div>
+        <div style="margin-bottom:.5rem;"><label>優先度<br>
+          <select name="priority" id="f_priority" class="form-select">
+            <option value="中" {% if task_item and task_item.priority=='中' %}selected{% endif %}>中</option>
+            <option value="高" {% if task_item and task_item.priority=='高' %}selected{% endif %}>高</option>
+            <option value="低" {% if task_item and task_item.priority=='低' %}selected{% endif %}>低</option>
+          </select>
+        </label></div>
+        <div style="margin-bottom:.5rem;"><label>期限<br>
+          <input type="date" name="due_date" id="f_due_date" class="form-control" value="{{ task_item.due_date if task_item else '' }}" />
+        </label></div>
+        <div style="margin-bottom:.5rem;"><label>詳細<br>
+          <textarea name="description" id="f_description" class="form-control" rows="3">{{ task_item.description if task_item else '' }}</textarea>
+        </label></div>
+        <div>
+          <button class="btn btn-primary" type="submit">追加</button>
+          <a class="btn btn-secondary" href="/tasks">キャンセル</a>
+        </div>
+      </form>
+    </div>
+  </body>
+ </html>

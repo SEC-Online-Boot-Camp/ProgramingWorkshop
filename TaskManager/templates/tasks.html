@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>タスク一覧</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body class="p-3">
+    <div class="container">
+      <div class="mb-3">
+        <h1 class="page-title mb-0">タスク一覧</h1>
+      </div>
+      <div class="table-wrapper position-relative">
+        <a class="btn btn-primary btn-sm" href="/tasks/new">作成</a>
+        <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>タスク</th>
+            <th>担当者</th>
+            <th>優先度</th>
+            <th>状況</th>
+            <th>期限</th>
+            <th>作成日</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in tasks %}
+          <tr>
+            <td>{{ row['task'] }}</td>
+            <td>{% if row['assigned'] %}{{ row['assigned'] }}{% else %}{% endif %}</td>
+            <td>{{ row['priority'] }}</td>
+            <td>{{ row['status'] }}</td>
+            <td>{% if row['due_date'] %}{{ row['due_date'] }}{% else %}{% endif %}</td>
+            <td>{{ row['created_at'] }}</td>
+            <td>
+              <a class="btn btn-sm btn-outline-secondary me-1" href="/tasks/edit/{{ row['id'] }}">編集</a>
+              <form method="post" action="/tasks/delete/{{ row['id'] }}" style="display:inline;"> 
+                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('削除してよいですか？')">削除</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </body>
+</html>
