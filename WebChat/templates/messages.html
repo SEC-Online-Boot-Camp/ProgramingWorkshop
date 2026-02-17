@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>メッセージ一覧</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main class="chat-shell">
+      <header class="chat-header">
+        <h1 class="chat-title">メッセージ一覧</h1>
+      </header>
+
+      <section class="chat-list" id="chat-list">
+        {% for row in messages %}
+        <article class="chat-item">
+          <div class="chat-meta">
+            <span class="chat-author">{{ row['assigned'] or '匿名' }}</span>
+            <time>{{ row['created_at'] }}</time>
+          </div>
+          <p class="chat-message">{{ row['message'] }}</p>
+          <div class="chat-actions">
+            <a class="btn btn-sm btn-outline-secondary" href="/messages/edit/{{ row['id'] }}">編集</a>
+            <form method="post" action="/messages/delete/{{ row['id'] }}">
+              <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('削除してよいですか？')">削除</button>
+            </form>
+          </div>
+        </article>
+        {% else %}
+        <p class="chat-empty">メッセージはまだありません。</p>
+        {% endfor %}
+      </section>
+
+      <section class="chat-compose">
+        <form method="post" action="/messages/create" class="compose-form">
+          <input name="assigned" class="form-control" placeholder="送信者" />
+          <input name="message" class="form-control" placeholder="message" />
+          <button type="submit" class="btn btn-primary">送信</button>
+        </form>
+      </section>
+    </main>
+    <script>
+      (function () {
+        const chatList = document.getElementById("chat-list");
+        if (!chatList) return;
+        chatList.scrollTop = chatList.scrollHeight;
+      })();
+    </script>
+  </body>
+</html>

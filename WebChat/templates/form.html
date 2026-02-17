@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>メッセージ編集</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main class="edit-shell">
+      <h1 class="chat-title">メッセージ編集</h1>
+      <form method="post" action="{{ form_action or '/messages/create' }}" class="edit-form">
+        <input name="assigned" id="f_assigned" class="form-control" placeholder="送信者" value="{{ message_item.assigned if message_item else '' }}" />
+        <textarea name="message" id="f_message" class="form-control" rows="4" placeholder="message">{{ message_item.message if message_item else '' }}</textarea>
+        <div class="edit-actions">
+          <button class="btn btn-primary" type="submit">保存</button>
+          <a class="btn btn-secondary" href="/messages">戻る</a>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
