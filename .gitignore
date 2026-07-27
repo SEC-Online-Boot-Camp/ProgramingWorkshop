@@ -15,6 +15,11 @@ downloads/
 eggs/
 .eggs/
 lib/
+# 暗号解読ミッション/AppはElixir/Phoenixプロジェクトで、
+# そのlib/はビルド成果物ではなくアプリ本体のソースコードなので、
+# 上の無指定な"lib/"ルールから明示的に除外する。
+!/暗号解読ミッション/App/lib/
+!/暗号解読ミッション/App/lib/**
 lib64/
 parts/
 sdist/
