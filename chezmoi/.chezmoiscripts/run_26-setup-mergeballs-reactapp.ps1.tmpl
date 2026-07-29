@@ -1,0 +1,18 @@
+{{ if eq .chezmoi.os "windows" -}}
+#!/usr/bin/env pwsh
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+
+{{ template "refresh-path.ps1" . -}}
+
+$appDir = Resolve-Path (Join-Path '{{ .chezmoi.sourceDir | replace "\\" "/" }}' '../ボール結合ゲーム/ReactApp')
+
+Write-Host "==> npm install ($appDir)"
+Push-Location $appDir
+try {
+    npm install
+} finally {
+    Pop-Location
+}
+{{ end -}}

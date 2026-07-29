@@ -1,0 +1,19 @@
+{{ if eq .chezmoi.os "windows" -}}
+#!/usr/bin/env pwsh
+# python312を導入する(バージョン固定)。最新のpythonパッケージは
+# pygame等の一部パッケージがまだwheelを提供しておらずソースビルドに失敗するため、
+# このリポジトリのアプリが動作確認済みの3.12系に固定する。
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+
+{{ template "scoop-bootstrap.ps1" . -}}
+
+if (-not (scoop bucket list | Select-String -Pattern '^versions\s')) {
+    Write-Host '==> scoop bucket add versions'
+    scoop bucket add versions
+}
+
+Write-Host '==> scoop install python312'
+scoop install python312
+{{ end -}}
