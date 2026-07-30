@@ -1,0 +1,16 @@
+{{ if eq .chezmoi.os "windows" -}}
+#!/usr/bin/env pwsh
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+
+{{ template "scoop-bootstrap.ps1" . -}}
+
+if (-not (scoop bucket list | Select-String -Pattern '^extras\s')) {
+    Write-Host '==> scoop bucket add extras'
+    scoop bucket add extras
+}
+
+Write-Host '==> scoop install vscode'
+scoop install vscode
+{{ end -}}

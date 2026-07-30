@@ -1,0 +1,21 @@
+{{ if eq .chezmoi.os "windows" -}}
+#!/usr/bin/env pwsh
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+
+{{ template "scoop-bootstrap.ps1" . -}}
+
+foreach ($package in @('erlang', 'elixir', 'nodejs-lts')) {
+    Write-Host "==> scoop install $package"
+    scoop install $package
+}
+
+# Scoopで追加された環境変数を現在のセッションに反映
+$env:PATH = [System.Environment]::GetEnvironmentVariable("Path","User") + ";" + [System.Environment]::GetEnvironmentVariable("Path","Machine")
+
+# Mixツールの強制セットアップ
+Write-Host "==> Installing mix local.hex & local.rebar"
+mix local.hex --force
+mix local.rebar --force
+{{ end -}}

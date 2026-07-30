@@ -1,0 +1,20 @@
+{{ if eq .chezmoi.os "windows" -}}
+#!/usr/bin/env pwsh
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+
+{{ template "refresh-path.ps1" . -}}
+
+$appDir = Resolve-Path (Join-Path '{{ .chezmoi.sourceDir | replace "\\" "/" }}' '../暗号解読ミッション')
+
+Write-Host "==> mix setup ($appDir)"
+Push-Location $appDir
+try {
+    mix local.hex --force
+    mix local.rebar --force
+    mix setup
+} finally {
+    Pop-Location
+}
+{{ end -}}

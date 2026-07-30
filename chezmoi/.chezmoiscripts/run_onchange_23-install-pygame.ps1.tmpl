@@ -1,0 +1,13 @@
+{{ if eq .chezmoi.os "windows" -}}
+#!/usr/bin/env pwsh
+# 衝突回避ゲーム / PyGameチュートリアル が使うpygameをグローバルに導入する。
+# どちらも単体スクリプトで requirements.txt が無いため、venvを切らずに導入する。
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+
+{{ template "refresh-path.ps1" . -}}
+
+Write-Host '==> pip install pygame'
+python312 -m pip install pygame
+{{ end -}}
