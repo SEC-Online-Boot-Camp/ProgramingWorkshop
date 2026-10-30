@@ -1,0 +1,43 @@
+# The directory Mix will write compiled artifacts to.
+/_build/
+
+# If you run "mix test --cover", coverage assets end up here.
+/cover/
+
+# The directory Mix downloads your dependencies sources to.
+/deps/
+
+# Where 3rd-party dependencies like ExDoc output generated docs.
+/doc/
+
+# Ignore .fetch files in case you like to edit your project deps locally.
+/.fetch
+
+# If the VM crashes, it generates a dump, let's ignore it too.
+erl_crash.dump
+
+# Also ignore archive artifacts (built via "mix archive.build").
+*.ez
+
+# Temporary files, for example, from tests.
+/tmp/
+
+# Ignore package tarball (built via "mix hex.build").
+database_mission-*.tar
+
+# ビルド済みのCSS・JS(priv/static/assets/)はコミットする。
+# 研修PCにはTailwind/esbuildが無く、ビルドできないため。
+# アプリ側(assets/・lib/)を変えたら `mix tailwind database_mission --minify` と
+# `mix esbuild database_mission --minify` を実行して、結果もコミットすること。
+
+# Ignore digested assets cache.
+/priv/static/cache_manifest.json
+
+# In case you use Node.js/npm, you want to ignore these.
+npm-debug.log
+/assets/node_modules/
+
+# esbuild/tailwind installer binaries (downloaded by `mix esbuild.install` / `mix tailwind.install`)
+/esbuild-*
+/tailwind-*
+

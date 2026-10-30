@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="暗号解読ミッション">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFC64A"/>
+      <stop offset="1" stop-color="#F26A42"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#D8D2EE"/>
+      <stop offset="1" stop-color="#ABA2CF"/>
+    </linearGradient>
+    <linearGradient id="keyg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#E1DCF5"/>
+      <stop offset="1" stop-color="#B4ABDA"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 鍵（右・細身） -->
+  <circle cx="46.5" cy="29.5" r="6.1" fill="url(#keyg)"/>
+  <circle cx="46.5" cy="29.5" r="2.8" fill="#FFFFFF"/>
+  <rect x="44.2" y="34.4" width="4.6" height="15.4" rx="2.3" fill="url(#keyg)"/>
+  <rect x="40.2" y="38.8" width="4.2" height="3.2" rx="1.6" fill="url(#keyg)"/>
+  <rect x="40.2" y="44" width="4.2" height="3.2" rx="1.6" fill="url(#keyg)"/>
+
+  <!-- シャックル（細め・大半は本体の裏） -->
+  <path d="M19.5 33V24.5a7.7 7.7 0 0 1 15.4 0V33" fill="none" stroke="url(#metal)"
+        stroke-width="5.2" stroke-linecap="round"/>
+
+  <!-- 本体 -->
+  <rect x="11" y="30.5" width="33" height="24" rx="7.6" fill="url(#body)"/>
+
+  <!-- 鍵穴 -->
+  <circle cx="27.5" cy="38.7" r="4.2" fill="#413A6B"/>
+  <path d="M25.6 41.3h3.8l1.2 6.8a3.2 3.2 0 0 1-6.2 0z" fill="#413A6B"/>
+</svg>
