@@ -1,31 +1,74 @@
-WebChat workshop starter
+# Webチャット
 
-Quick start (for students):
+メッセージを投稿・一覧表示・編集・削除できる、Webチャット（掲示板）を作る演習です。
+Python（Flask）とSQLiteを使います。
 
-- Open the `WebChat` folder in VSCode.
-- Create and activate a virtualenv (optional):
+受講者は`app.py`の「TODO」を埋めて、アプリを完成させます。
+テストを実行すると、TODOを正しく埋められたかを確かめられます。
 
-```powershell
-py -3.12 -m venv .venv
-& .venv\Scripts\Activate.ps1
-```
+## フォルダの中身
 
-- Install dependencies:
+| もの | 内容 |
+|---|---|
+| `app.py` | 受講者が編集するファイル（TODOあり） |
+| `app_complete.py` | 完成版（講師用・答え合わせ用） |
+| `webchat.db` | 最初のデータが入ったデータベース |
+| `create_db.py` | `webchat.db`を作り直すスクリプト |
+| `templates/`・`static/` | 画面のHTML・CSS |
+| `tests/` | 確認用のテスト（CRUDの機能ごとに4つ） |
+
+## 準備（初回だけ）
+
+Python 3.12が必要です。このフォルダで、必要なパッケージ（Flask・pytest）を入れます。
 
 ```powershell
 py -3.12 -m pip install -r requirements.txt
 ```
 
-- Regenerate seed DB (optional, instructor already provided one):
+ほかの演習とパッケージを分けたいときは、先に仮想環境を作って有効にしてから、上のコマンドを実行します（任意）。
 
 ```powershell
-py -3.12 create_seed_db.py -f
+py -3.12 -m venv .venv
+.venv\Scripts\Activate.ps1
 ```
 
-- Run tests:
+## 起動
+
+このフォルダで次を実行し、ブラウザで`http://127.0.0.1:5000`を開きます。止めるときは、ターミナルで`Ctrl+C`を押します。
+
+```powershell
+py -3.12 app.py
+```
+
+完成版を動かして見せるときは、`app.py`の代わりに`app_complete.py`を実行します。
+
+```powershell
+py -3.12 app_complete.py
+```
+
+どちらも同じ`webchat.db`を読み書きします。
+
+## テストで確かめる
 
 ```powershell
 py -3.12 -m pytest -q
 ```
 
-- During the lesson, edit the TODOs in `app.py` to make tests pass.
+テストは`app.py`を確かめます。機能ごとに分かれているので、1つずつ確かめることもできます。
+
+```powershell
+py -3.12 -m pytest -q tests/test_01_Read.py     # 一覧表示
+py -3.12 -m pytest -q tests/test_02_Create.py   # 投稿
+py -3.12 -m pytest -q tests/test_03_Delete.py   # 削除
+py -3.12 -m pytest -q tests/test_04_Update.py   # 編集
+```
+
+テストは、毎回作り直す一時的なデータベースを使うので、`webchat.db`の中身は変わりません。
+
+## データを最初の状態に戻す
+
+画面から投稿・削除したデータを、最初の状態に戻します（`webchat.db`を作り直します）。
+
+```powershell
+py -3.12 create_db.py -f
+```

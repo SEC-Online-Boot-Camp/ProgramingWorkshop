@@ -6,10 +6,25 @@ import Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
+# 待ち受けアドレス。既定は自分のPCだけ（127.0.0.1）。
+# 標準ユーザーが全ネットワーク（0.0.0.0）で待ち受けると、Windowsファイアウォールの
+# 許可確認（管理者の資格情報）が出るため。
+# 他のPCから開く場合（講師PCに受講者が接続する場合など）は、起動の前に環境変数
+# CODEBREAKING_MISSION_LISTEN にIPアドレス（全ネットワークなら 0.0.0.0）を設定する。
+listen_ip =
+  case System.get_env("CODEBREAKING_MISSION_LISTEN") do
+    value when value in [nil, ""] ->
+      {127, 0, 0, 1}
+
+    value ->
+      case :inet.parse_address(String.to_charlist(value)) do
+        {:ok, ip} -> ip
+        {:error, _} -> raise "CODEBREAKING_MISSION_LISTEN はIPアドレスで指定してください（例: 0.0.0.0）: #{value}"
+      end
+  end
+
 config :codebreaking_mission, CodebreakingMissionWeb.Endpoint,
-  # Binding to loopback ipv4 address prevents access from other machines.
-  # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {0, 0, 0, 0}],
+  http: [ip: listen_ip],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,

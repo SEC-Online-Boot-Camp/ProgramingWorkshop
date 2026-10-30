@@ -11,17 +11,23 @@ config :codebreaking_mission,
   generators: [timestamp_type: :utc_datetime]
 
 # Pythonコード実行の設定。
-# 汎用的な"python"/"python3"だとPATH解決でWindows Store版のスタブ実行ファイルに
-# 化けることがあるため、まず固有の実行ファイル名"python312"
-# (scoopのpython312パッケージが提供するシム)を優先して探す。
+# 研修PC（pc-setupで構築）はPythonをPATHに置かず、userの仮想環境
+# ~/sobc-venv/Scripts/python.exe だけを使う。あればそれを最優先にする。
+# なければPATHから探す。汎用的な"python"/"python3"だとPATH解決でWindows Store版の
+# スタブ実行ファイルに化けることがあるため、まず固有の実行ファイル名"python312"
+# (scoopのpython312パッケージが提供するシム)を優先する。
+sobc_venv_python = Path.join([System.user_home!(), "sobc-venv", "Scripts", "python.exe"])
+
 config :codebreaking_mission, :python_runner,
   executable:
-    System.find_executable("python312") ||
+    (File.exists?(sobc_venv_python) && sobc_venv_python) ||
+      System.find_executable("python312") ||
       System.find_executable("python3") ||
       System.find_executable("python") ||
       raise("""
       Python実行ファイルが見つかりません。
-      `scoop install python312` などでPython 3.12系を導入してください。
+      研修PCでは ~/sobc-venv/Scripts/python.exe を使います（pc-setupの3章が完了している必要があります）。
+      それ以外の環境では `scoop install python312` などでPython 3.12系を導入してください。
       """),
   run_timeout_ms: 15_000
 
